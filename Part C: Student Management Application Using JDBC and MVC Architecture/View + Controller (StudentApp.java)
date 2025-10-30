@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class StudentApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StudentDAO dao = new StudentDAO();
+        int choice;
+
+        do {
+            System.out.println("\n===== Student Management System =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. View All Students");
+            System.out.println("3. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Marks: ");
+                    double marks = sc.nextDouble();
+
+                    Student s = new Student(id, name, marks);
+                    dao.addStudent(s);
+                }
+
+                case 2 -> {
+                    List<Student> list = dao.getAllStudents();
+                    System.out.println("ID\tName\tMarks");
+                    for (Student s : list) {
+                        System.out.println(s.getId() + "\t" + s.getName() + "\t" + s.getMarks());
+                    }
+                }
+
+                case 3 -> System.out.println("Exiting...");
+                default -> System.out.println("Invalid choice!");
+            }
+        } while (choice != 3);
+        sc.close();
+    }
+}
