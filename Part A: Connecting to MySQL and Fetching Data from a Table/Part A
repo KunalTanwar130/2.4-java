@@ -1,0 +1,36 @@
+import java.sql.*;
+
+public class FetchDataExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/college_db";
+        String user = "root";
+        String password = "root";
+
+        try {
+            // Step 1: Load JDBC driver (optional for modern versions)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Step 2: Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Step 3: Create Statement
+            Statement stmt = con.createStatement();
+
+            // Step 4: Execute Query
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+
+            // Step 5: Display Result
+            System.out.println("ID\tName\tCourse");
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + "\t" +
+                                   rs.getString("name") + "\t" +
+                                   rs.getString("course"));
+            }
+
+            // Step 6: Close Connection
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
